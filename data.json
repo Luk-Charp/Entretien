@@ -1,0 +1,18 @@
+[
+  {
+    "nom": "Dupont",
+    "prenom": "Lucas",
+    "heure": "10:30",
+    "jury": "Jury 2",
+    "salle": "B12",
+    "accompagnant": "Marie"
+  },
+  {
+    "nom": "Martin",
+    "prenom": "Emma",
+    "heure": "11:00",
+    "jury": "Jury 1",
+    "salle": "A05",
+    "accompagnant": "Paul"
+  }
+]
