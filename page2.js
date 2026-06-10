@@ -1,0 +1,184 @@
+fetch("data.json")
+  .then(response => response.json())
+  .then(data => {
+
+    const nom = localStorage.getItem("nom");
+    const prenom = localStorage.getItem("prenom");
+
+    if (!nom || !prenom) {
+      alert("Erreur : informations manquantes");
+      return;
+    }
+
+    function normaliserTexte(texte) {
+  return texte
+    .toLowerCase()
+    .normalize("NFD") // sépare les accents
+    .replace(/[\u0300-\u036f]/g, ""); // supprime les accents
+}
+
+    // 🔍 chercher dans le JSON avec les bonnes clésAHIVODJI
+    const user = data.find(e =>
+  normaliserTexte(e.NOMS) === normaliserTexte(nom) &&
+  normaliserTexte(e.PRENOMS) === normaliserTexte(prenom)
+  );
+
+    if (user) {
+        
+
+    document.getElementById("bonjour").textContent =
+    "Bienvenue " + user.PRENOMS ;
+
+
+      document.getElementById("heure").textContent = user["HEURE DE PASSAGE"];
+      document.getElementById("jury").textContent = user["n° JURY"];
+      document.getElementById("salle").textContent = user["n° SALLES"];
+      
+      const accompagnantElement = document.getElementById("accompagnant");
+      accompagnantElement.textContent = user["ACCOMPAGNANTS"];
+      
+      // Ajouter le sous-titre
+      const sousTitreElement = document.createElement("small");
+      sousTitreElement.textContent = "Cherche les étudiants avec une étiquette de cette couleur";
+      sousTitreElement.style.fontStyle = "italic";
+      sousTitreElement.style.display = "block";
+      sousTitreElement.style.marginTop = "8px";
+      accompagnantElement.parentElement.appendChild(sousTitreElement);
+      
+      if (user.HEXA) {
+        // Appliquer la couleur HEXA au texte des accompagnants
+        accompagnantElement.style.color = user.HEXA;
+        accompagnantElement.style.fontWeight = "bold";
+        
+        // Appliquer la couleur HEXA au sous-titre
+        sousTitreElement.style.color = user.HEXA;
+        
+       
+      }
+    } else {
+      alert("Utilisateur non trouvé");
+    }
+  });
+
+const activitesContainer = document.getElementById("activites");
+
+// Afficher les activités automatiquement au chargement
+function afficherActivites() {
+  // 🔥 TITRE PRINCIPAL
+  ajouterTitre("🔥 Voici ce qui pourrait t'intéresser");
+  ajouterSousTitre("voir plan en bas");
+
+  // 🔴 BLOC PRINCIPAL (AVEC GRILLE)
+  const blocPrincipal = creerContainer();
+  ajouterCarteDans(blocPrincipal, "Stand FAQ prépa");
+  ajouterCarteDans(blocPrincipal, "Stand des projets des prépas");
+  activitesContainer.appendChild(blocPrincipal);
+
+  // 🎯 TITRE SECONDAIRE
+  ajouterTitreSecondaire("🎯 On propose aussi dans le hall");
+
+  // 🔵 BLOC SECONDAIRE (AVEC GRILLE)
+  const blocSecondaire = creerContainer();
+  ajouterCarteDans(blocSecondaire, "Billard");
+  ajouterCarteDans(blocSecondaire, "Babyfoot");
+  ajouterCarteDans(blocSecondaire, "Club LAN (PS5 / Switch)");
+  ajouterCarteDans(blocSecondaire, "Jeux d'échecs");
+  ajouterCarteDans(blocSecondaire, "Infos Résidence");
+  ajouterCarteDans(blocSecondaire, "Atelier VR");
+  ajouterCarteDans(blocSecondaire, "Cafet'");
+
+  activitesContainer.appendChild(blocSecondaire);
+}
+
+// Appeler la fonction au chargement
+afficherActivites();
+
+// ===== MODAL SALLE =====
+function ouvrirModalSalle() {
+    document.getElementById("modalSalle").style.display = "block";
+}
+
+function fermerModalSalle() {
+    document.getElementById("modalSalle").style.display = "none";
+}
+
+// ===== MODAL PLAN =====
+function ouvrirModalPlan() {
+    document.getElementById("modalPlan").style.display = "block";
+}
+
+function fermerModalPlan() {
+    document.getElementById("modalPlan").style.display = "none";
+}
+
+// Fermer les modals au clic en dehors du contenu
+window.onclick = function(event) {
+    const modalSalle = document.getElementById("modalSalle");
+    const modalPlan = document.getElementById("modalPlan");
+    if (event.target == modalSalle) {
+        modalSalle.style.display = "none";
+    }
+    if (event.target == modalPlan) {
+        modalPlan.style.display = "none";
+    }
+}
+
+// fonction carte
+function afficherCarte(titre) {
+  const card = document.createElement("div");
+  card.classList.add("activite-card");
+
+  card.innerHTML = `<h3>${titre}</h3>`;
+
+  activitesContainer.appendChild(card);
+}
+
+function ajouterTitre(texte) {
+  const titre = document.createElement("h3");
+  titre.textContent = texte;
+  titre.style.marginTop = "20px";
+  titre.style.textAlign = "center";
+  titre.style.color = "#ef3333";
+
+  activitesContainer.appendChild(titre);
+}
+
+function ajouterSousTitre(texte) {
+  const sousTitre = document.createElement("p");
+  sousTitre.textContent = texte;
+  sousTitre.style.marginTop = "5px";
+  sousTitre.style.textAlign = "center";
+  sousTitre.style.color = "#999";
+  sousTitre.style.fontSize = "13px";
+  sousTitre.style.fontStyle = "italic";
+
+  activitesContainer.appendChild(sousTitre);
+}
+
+function ajouterTitreSecondaire(texte) {
+  const titre = document.createElement("h4");
+  titre.textContent = texte;
+  titre.style.marginTop = "30px";
+  titre.style.textAlign = "center";
+  titre.style.color = "#555";
+
+  activitesContainer.appendChild(titre);
+}
+
+function creerContainer() {
+  const div = document.createElement("div");
+  div.classList.add("activities-container");
+  return div;
+}
+
+function ajouterCarteDans(container, titre, estPrincipal = false) {
+  const card = document.createElement("div");
+  card.classList.add("activite-card");
+  card.innerHTML = `<h3>${titre}</h3>`;
+
+  container.appendChild(card);
+
+  if (estPrincipal && container.children.length === 1) {
+    card.style.gridColumn = "1 / -1";
+  }
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Entretiens</title>
+
+        <link rel="stylesheet" href="page2.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+<link rel="icon" href="images/favicon.ico">
+
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+
+
+
+        <script src="https://kit.fontawesome.com/61523b4b4d.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<!-- Home -->
+<section class="home">
+  <div class="menu">
+
+    <a href="index.html" class="logo">
+  <img src="images/logo.png">
+  <span>Journée des Entretiens</span>
+</a>
+
+  </div>
+</section>
+
+
+
+<section class="titre">
+    <h2>Les informations sur <br> ton passage</h2>
+
+</section>
+
+<h2 id="bonjour">Chargement...</h2>
+
+<section class="infos-container">
+
+
+    <div class="infos-card">
+    <i class="fa-regular fa-clock"></i>
+    <h2>Heure de passage</h2>
+    <p id="heure">Chargement...</p>
+</div>
+
+<div class="infos-card">
+    <i class="fa-solid fa-user-group"></i>
+    <h2>Votre jury</h2>
+    <p id="jury">Chargement...</p>
+</div>
+
+<div class="infos-card" onclick="ouvrirModalSalle()" style="cursor: pointer;">
+    <i class="fa-solid fa-map-location"></i>
+    <h2>Salle de passage</h2>
+    <p id="salle">Chargement...</p>
+    <small style="color: #ef3333; font-style: italic;">clique pour voir le plan</small>
+</div>
+
+<div class="infos-card">
+    <i class="fa-solid fa-hand-holding-hand"></i>
+    <h2>Accompagnants</h2>
+    <p id="accompagnant">Chargement...</p>
+</div>
+</section>
+
+
+
+<div id="activites"></div>
+
+<!-- Image École en bas -->
+<section class="section-photo-ecole">
+  <img src="images/plan1er.jpeg" alt="École" class="photo-ecole" onclick="ouvrirModalPlan()" style="cursor: pointer;">
+</section>
+
+<!-- Modal Salle -->
+<div id="modalSalle" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="fermerModalSalle()">&times;</span>
+    <img id="imageSalle" src="images/plan3e.jpeg" alt="Salle de passage">
+  </div>
+</div>
+
+<!-- Modal Plan -->
+<div id="modalPlan" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="fermerModalPlan()">&times;</span>
+    <img id="imagePlan" src="images/plan1er.jpeg" alt="Plan">
+  </div>
+</div>
+
+</body>
+<script src="page2.js"></script>
+</body>
+
+</html>
